@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const incomeSchema = mongoose.Schema(
+const incomeSchema = new mongoose.Schema(
     {
         amount: {
             type: Number,
