@@ -9,6 +9,7 @@ const verifyUser = async (req,res,next) =>{
         let token = req.header('Authorization');
         token = token.split(' ')[1];
         const user = await jwt.verify(token,process.env.SECRET)
+        res.locals.user = user
         next()
     } catch (error) {
         handleResponse(

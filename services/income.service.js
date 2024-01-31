@@ -1,8 +1,12 @@
 const Income = require("../models/income.model")
 
 
-const insertIncome = async (req) =>{
-    const income = await Income.create(req.body)
+const insertIncome = async (req,res) =>{
+    const newIncome = {
+        ...req.body,
+        user:res.locals.user.checkUser._id
+    }
+    const income = await Income.create(newIncome)
     return income
 }
 

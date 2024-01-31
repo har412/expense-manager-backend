@@ -2,11 +2,12 @@ const express = require('express')
 const app = express()
 const { connect } = require('./db_connect')
 
+// connect to db
+connect()
 const env = require('dotenv')
 env.config({})
 
-// connect to db
-connect()
+
 
 // Route Imports 
 const authRouter = require('./routes/v1/auth.route')

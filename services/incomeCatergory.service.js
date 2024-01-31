@@ -3,8 +3,12 @@ const IncomeCategory = require("../models/incomeCategory.model")
 
 
 
-const insertIncomeCategory = async (req) =>{
-    const incomeCategory = await IncomeCategory.create(req.body)
+const insertIncomeCategory = async (req,res) =>{
+    const newIncomeCategory = {
+        ...req.body,
+        user:res.locals.user.checkUser._id
+    }
+    const incomeCategory = await IncomeCategory.create(newIncomeCategory)
     return incomeCategory
 }
 

@@ -2,8 +2,13 @@ const Expense = require('../models/expense.model')
 
 
 
-const insertExpense = async (req) =>{
-    const expense = await Expense.create(req.body)
+const insertExpense = async (req,res) =>{
+    const newExpense = {
+        ...req.body,
+        user:res.locals.user.checkUser._id
+    }
+    const expense = await Expense.create(newExpense)
+
     return expense
 }
 
@@ -32,11 +37,6 @@ const getExpenses = async(req) =>{
     const expense = await Expense.find(
         query
     )
-    return expense
-}
-
-const findExpenseById = async(id) =>{
-    const expense = await Expense.find({_id:id})
     return expense
 }
 

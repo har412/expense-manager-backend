@@ -16,6 +16,11 @@ const budgetSchema = new mongoose.Schema(
         end_date:{
             type:Date,
             required:true
+        },
+        user:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User",
+            required:true
         }
     },
     {

@@ -3,8 +3,12 @@ const Charity = require("../models/charity.model")
 
 
 
-const insertCharity = async (req) =>{
-    const charity = await Charity.create(req.body)
+const insertCharity = async (req,res) =>{
+    const newCharity = {
+        ...req.body,
+        user:res.locals.user.checkUser._id
+    }
+    const charity = await Charity.create(newCharity)
     return charity
 }
 

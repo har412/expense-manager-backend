@@ -3,8 +3,12 @@ const ExpenseCategory = require("../models/expenseCategory.model")
 
 
 
-const insertExpenseCategory = async (req) =>{
-    const expenseCategory = await ExpenseCategory.create(req.body)
+const insertExpenseCategory = async (req,res) =>{
+    const newExpenseCategory = {
+        ...req.body,
+        user:res.locals.user.checkUser._id
+    }
+    const expenseCategory = await ExpenseCategory.create(newExpenseCategory)
     return expenseCategory
 }
 

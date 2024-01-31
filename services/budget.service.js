@@ -3,8 +3,12 @@ const Budget = require("../models/budget.model")
 
 
 
-const insertBudget = async (req) =>{
-    const budget = await Budget.create(req.body)
+const insertBudget = async (req,res) =>{
+    const newBudget = {
+        ...req.body,
+        user:res.locals.user.checkUser._id
+    }
+    const budget = await Budget.create(newBudget)
     return budget
 }
 
