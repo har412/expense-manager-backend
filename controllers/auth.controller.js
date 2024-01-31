@@ -1,5 +1,5 @@
 const httpServer = require('http-status')
-const { createUser } = require('../services/auth.service')
+const { createUser, loginWithEmailAndPassword } = require('../services/auth.service')
 const { handleResponse } = require('../utils/responseHandler')
 const httpStatus = require('http-status')
 
@@ -28,7 +28,14 @@ const register = async (req, res,) => {
 
 const login = async (req,res) =>{
     try {
-        
+        const {email,password} = req.body
+        const data = await loginWithEmailAndPassword(email,password ,res)
+        handleResponse(
+            res,
+            httpStatus.OK,
+            data,
+            "Login Sucess"
+        )
     } catch (error) {
         handleResponse(
             res,
@@ -43,5 +50,6 @@ const login = async (req,res) =>{
 
 
 module.exports = {
-    register
+    register,
+    login
 }

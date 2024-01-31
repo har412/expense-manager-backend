@@ -1,1 +1,5 @@
 node_modules
+/routes/v1/sample.route.js
+/controllers/sample.controller.js
+/services/sample.service.js
+/models/sample.model.js
