@@ -3,8 +3,8 @@ const app = express()
 const { connect } = require('./db_connect')
 const cors = require('cors')
 const env = require('dotenv')
-
-
+const morgan = require('morgan')
+app.use(morgan('tiny'))
 connect()
 env.config({})
 
@@ -12,6 +12,8 @@ env.config({})
 app.use(cors({
     origin:"*"
 }))
+
+// 
 
 
 
