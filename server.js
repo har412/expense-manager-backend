@@ -1,11 +1,17 @@
 const express = require('express')
 const app = express()
 const { connect } = require('./db_connect')
-
-// connect to db
-connect()
+const cors = require('cors')
 const env = require('dotenv')
+
+
+connect()
 env.config({})
+
+//cors
+app.use(cors({
+    origin:"*"
+}))
 
 
 

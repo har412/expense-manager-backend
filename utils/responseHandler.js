@@ -1,8 +1,8 @@
 
 
-const handleResponse = (res,status,data,message)=>{
+const handleResponse = async (res,status,data,message)=>{
 
-    res.status(status).json({
+    res.status(status).send({
         data:data,
         detail:message
     })

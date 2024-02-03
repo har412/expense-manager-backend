@@ -30,14 +30,17 @@ const login = async (req,res) =>{
     try {
         const {email,password} = req.body
         const data = await loginWithEmailAndPassword(email,password ,res)
-        handleResponse(
-            res,
-            httpStatus.OK,
-            data,
-            "Login Sucess"
-        )
+        if(data){
+            await handleResponse(
+                res,
+                httpStatus.OK,
+                data,
+                "Login Sucess"
+            )
+        }
+       
     } catch (error) {
-        handleResponse(
+       await handleResponse(
             res,
             httpStatus.INTERNAL_SERVER_ERROR,
             error.message,

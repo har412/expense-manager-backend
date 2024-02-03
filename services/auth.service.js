@@ -21,23 +21,25 @@ const createUser = async (body, res) => {
 const loginWithEmailAndPassword = async (email, password, res) => {
     const checkUser = await User.findOne({ email: email })
     if (checkUser) {
-        const checkPassword = bcrypt.compare(password, checkUser.password)
+        const checkPassword = await bcrypt.compare(password, checkUser.password)
         if (checkPassword) {
-            console.log(checkUser)
+            // console.log(checkUser)
             const acccess_token = await jwt.sign({checkUser}, process.env.SECRET, { expiresIn: '10h' })
             const refresh_token = await jwt.sign({checkUser}, process.env.SECRET, { expiresIn: '7d' })
             return {
-                acccess_token: acccess_token,
+                access_token: acccess_token,
                 refresh_token: refresh_token
             }
         }
         else {
+            
             handleResponse(
                 res,
                 httpStatus.UNAUTHORIZED,
                 [],
                 "Unauthorised Access"
             )
+            return null
         }
     }
     else {
