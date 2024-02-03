@@ -12,13 +12,13 @@ const updateUser = async (req) =>{
 }
 
 
-const getUsers = async(req) =>{
+const getUsers = async(req,res) =>{
+
     const user = await User.find(
-       {_id:req.params.id}
+       {_id:res.locals.user.checkUser._id}
     )
     return user
 }
-
 
 
 
