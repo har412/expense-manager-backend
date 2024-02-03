@@ -23,13 +23,14 @@ const incomeCategoryRouter = require('./routes/v1/incomeCategory.route')
 const expenseCategoryRouter = require('./routes/v1/expenseCategory.route')
 const budgetRouter = require('./routes/v1/budget.route')
 const charityRouter = require('./routes/v1/charity.route')
-const { handleResponse } = require('./utils/responseHandler')
+const userRouter = require('./routes/v1/user.route')
 
 app.use(express.json({}))
 
 // Routes 
 app.use('/v1/auth',authRouter)
 app.use('/v1/expense',expenseRouter)
+app.use('/v1/user',userRouter)
 app.use('/v1/charity',charityRouter)
 app.use('/v1/budget',budgetRouter)
 app.use('/v1/expenseCategory',expenseCategoryRouter)
