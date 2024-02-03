@@ -32,8 +32,9 @@ const deleteExpense = async (req) =>{
     
 }
 
-const getExpenses = async(req) =>{
+const getExpenses = async(req,res) =>{
     const query = req.query
+    query.user = res.locals.user.checkUser._id
     const expense = await Expense.find(
         query
     )
