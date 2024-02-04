@@ -1,5 +1,4 @@
-const ExpenseCategory = require("../models/expenseCategory.model")
-
+const ExpenseCategory = require('../models/expenseCategory.model')
 
 
 
@@ -9,6 +8,7 @@ const insertExpenseCategory = async (req,res) =>{
         user:res.locals.user.checkUser._id
     }
     const expenseCategory = await ExpenseCategory.create(newExpenseCategory)
+
     return expenseCategory
 }
 
@@ -32,8 +32,19 @@ const deleteExpenseCategory = async (req) =>{
     
 }
 
-const getExpenseCategorys = async(req) =>{
+const getExpenseCategorys = async(req,res) =>{
     const query = req.query
+    query.user = res.locals.user.checkUser._id
+    const expenseCategory = await ExpenseCategory.find(
+        query
+    )
+    return expenseCategory
+}
+
+const getExpenseCategoryById = async(req,res) =>{
+    const query = {
+        _id : req.params.id
+    }
     const expenseCategory = await ExpenseCategory.find(
         query
     )
@@ -47,5 +58,6 @@ module.exports = {
     insertExpenseCategory,
     updateExpenseCategory,
     deleteExpenseCategory,
+    getExpenseCategoryById,
     getExpenseCategorys
 }

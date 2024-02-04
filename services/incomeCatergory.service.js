@@ -1,5 +1,4 @@
-const IncomeCategory = require("../models/incomeCategory.model")
-
+const IncomeCategory = require('../models/incomeCategory.model')
 
 
 
@@ -9,6 +8,7 @@ const insertIncomeCategory = async (req,res) =>{
         user:res.locals.user.checkUser._id
     }
     const incomeCategory = await IncomeCategory.create(newIncomeCategory)
+
     return incomeCategory
 }
 
@@ -32,8 +32,19 @@ const deleteIncomeCategory = async (req) =>{
     
 }
 
-const getIncomeCategorys = async(req) =>{
+const getIncomeCategorys = async(req,res) =>{
     const query = req.query
+    query.user = res.locals.user.checkUser._id
+    const incomeCategory = await IncomeCategory.find(
+        query
+    )
+    return incomeCategory
+}
+
+const getIncomeCategoryById = async(req,res) =>{
+    const query = {
+        _id : req.params.id
+    }
     const incomeCategory = await IncomeCategory.find(
         query
     )
@@ -47,5 +58,6 @@ module.exports = {
     insertIncomeCategory,
     updateIncomeCategory,
     deleteIncomeCategory,
+    getIncomeCategoryById,
     getIncomeCategorys
 }

@@ -1,37 +1,37 @@
 const httpStatus = require("http-status")
 const { handleResponse } = require("../utils/responseHandler")
-const { insertIncomeCategory , updateIncomeCategory , deleteIncomeCategory , getIncomeCategorys} = require("../services/incomeCatergory.service")
+const { insertExpense, updateExpense, deleteExpense, getExpenses, getExpenseById } = require("../services/expense.service")
 
 
-const addIncomeCategory = async(req,res) =>{
+const addExpense = async(req,res) =>{
 
     try {
-        const incomeCategory = await insertIncomeCategory(req,res)
+        const expense = await insertExpense(req,res)
         handleResponse(
             res,
             httpStatus.OK,
-            incomeCategory,
-            "IncomeCategory Added Success"
+            expense,
+            "Expense Added Success"
         )
     } catch (error) {
         handleResponse(
             res,
             httpStatus.INTERNAL_SERVER_ERROR,
             error.message,
-            "Error in Add incomeCategory"
+            "Error in Add expense"
         )
     }
 
 }
 
-const editIncomeCategory = async(req,res) =>{
+const editExpense = async(req,res) =>{
 
     try {
-        const incomeCategory = await updateIncomeCategory(req,res)
+        const expense = await updateExpense(req,res)
         handleResponse(
             res,
             httpStatus.OK,
-            incomeCategory,
+            expense,
             "Updated Sucessfully"
         )
     } catch (error) {
@@ -39,16 +39,16 @@ const editIncomeCategory = async(req,res) =>{
             res,
             httpStatus.INTERNAL_SERVER_ERROR,
             error.message,
-            "Error in Edit IncomeCategory"
+            "Error in Edit Expense"
         )
     }
 
 }
 
-const removeIncomeCategory = async(req,res) =>{
+const removeExpense = async(req,res) =>{
 
     try {
-        const response = await deleteIncomeCategory(req,res)
+        const response = await deleteExpense(req,res)
         handleResponse(
             res,
             httpStatus.OK,
@@ -60,21 +60,21 @@ const removeIncomeCategory = async(req,res) =>{
           res,
           httpStatus.INTERNAL_SERVER_ERROR,
           error.message,
-          'Error in deleting IncomeCategory'
+          'Error in deleting Expense'
       )
     }
 
 }
 
 
-const getAllIncomeCategorys = async(req,res)=>{
+const getAllExpenses = async(req,res)=>{
 
     try {
-        const incomeCategory = await getIncomeCategorys(req,res)
-        handleResponse(
+        const expense = await getExpenses(req,res)
+                handleResponse(
             res,
             httpStatus.OK,
-            incomeCategory,
+            expense,
             'Retrieved'
         )
     } catch (error) {
@@ -82,7 +82,28 @@ const getAllIncomeCategorys = async(req,res)=>{
             res,
             httpStatus.INTERNAL_SERVER_ERROR,
             error.message,
-            'Error in Getting IncomeCategory'
+            'Error in Getting Expense'
+        )
+    }
+
+}
+
+const expenseById = async(req,res)=>{
+
+    try {
+        const expense = await getExpenseById(req,res)
+                handleResponse(
+            res,
+            httpStatus.OK,
+            expense,
+            'Retrieved'
+        )
+    } catch (error) {
+        handleResponse(
+            res,
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error.message,
+            'Error in Getting Expense'
         )
     }
 
@@ -90,8 +111,9 @@ const getAllIncomeCategorys = async(req,res)=>{
 
 
 module.exports = {
-    addIncomeCategory,
-    removeIncomeCategory,
-    editIncomeCategory,
-    getAllIncomeCategorys
+    addExpense,
+    removeExpense,
+    editExpense,
+    getAllExpenses,
+    expenseById
 }

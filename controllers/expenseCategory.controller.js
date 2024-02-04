@@ -1,6 +1,6 @@
 const httpStatus = require("http-status")
 const { handleResponse } = require("../utils/responseHandler")
-const { insertExpenseCategory , updateExpenseCategory , deleteExpenseCategory , getExpenseCategorys  } = require("../services/expenseCatergory.service")
+const { insertExpenseCategory, updateExpenseCategory, deleteExpenseCategory, getExpenseCategorys, getExpenseCategoryById } = require("../services/expenseCategory.service")
 
 
 const addExpenseCategory = async(req,res) =>{
@@ -71,7 +71,28 @@ const getAllExpenseCategorys = async(req,res)=>{
 
     try {
         const expenseCategory = await getExpenseCategorys(req,res)
+                handleResponse(
+            res,
+            httpStatus.OK,
+            expenseCategory,
+            'Retrieved'
+        )
+    } catch (error) {
         handleResponse(
+            res,
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error.message,
+            'Error in Getting ExpenseCategory'
+        )
+    }
+
+}
+
+const expenseCategoryById = async(req,res)=>{
+
+    try {
+        const expenseCategory = await getExpenseCategoryById(req,res)
+                handleResponse(
             res,
             httpStatus.OK,
             expenseCategory,
@@ -93,5 +114,6 @@ module.exports = {
     addExpenseCategory,
     removeExpenseCategory,
     editExpenseCategory,
-    getAllExpenseCategorys
+    getAllExpenseCategorys,
+    expenseCategoryById
 }
