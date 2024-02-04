@@ -1,6 +1,6 @@
 const httpStatus = require("http-status")
 const { handleResponse } = require("../utils/responseHandler")
-const { insertExpenseCategory, updateExpenseCategory, deleteExpenseCategory, getExpenseCategorys, getExpenseCategoryById } = require("../services/expenseCategory.service")
+const { insertExpenseCategory ,  updateExpenseCategory, deleteExpenseCategory, getExpenseCategorys, getExpenseCategoryById} = require("../services/expenseCatergory.service")
 
 
 const addExpenseCategory = async(req,res) =>{
