@@ -41,6 +41,16 @@ const getExpenses = async(req,res) =>{
     return expense
 }
 
+const getExpenseById = async(req,res) =>{
+    const query = {
+        _id : req.params.id
+    }
+    const expense = await Expense.find(
+        query
+    )
+    return expense
+}
+
 
 
 
@@ -48,5 +58,6 @@ module.exports = {
     insertExpense,
     updateExpense,
     deleteExpense,
+    getExpenseById,
     getExpenses
 }

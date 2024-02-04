@@ -1,6 +1,6 @@
 const httpStatus = require("http-status")
 const { handleResponse } = require("../utils/responseHandler")
-const { insertExpense, updateExpense, deleteExpense, getExpenses } = require("../services/expense.service")
+const { insertExpense, updateExpense, deleteExpense, getExpenses, getExpenseById } = require("../services/expense.service")
 
 
 const addExpense = async(req,res) =>{
@@ -71,7 +71,28 @@ const getAllExpenses = async(req,res)=>{
 
     try {
         const expense = await getExpenses(req,res)
+                handleResponse(
+            res,
+            httpStatus.OK,
+            expense,
+            'Retrieved'
+        )
+    } catch (error) {
         handleResponse(
+            res,
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error.message,
+            'Error in Getting Expense'
+        )
+    }
+
+}
+
+const expenseById = async(req,res)=>{
+
+    try {
+        const expense = await getExpenseById(req,res)
+                handleResponse(
             res,
             httpStatus.OK,
             expense,
@@ -93,5 +114,6 @@ module.exports = {
     addExpense,
     removeExpense,
     editExpense,
-    getAllExpenses
+    getAllExpenses,
+    expenseById
 }

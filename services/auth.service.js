@@ -24,7 +24,7 @@ const loginWithEmailAndPassword = async (email, password, res) => {
         const checkPassword = await bcrypt.compare(password, checkUser.password)
         if (checkPassword) {
             // console.log(checkUser)
-            const acccess_token = await jwt.sign({checkUser}, process.env.SECRET, { expiresIn: '10h' })
+            const acccess_token = await jwt.sign({checkUser}, process.env.SECRET)
             const refresh_token = await jwt.sign({checkUser}, process.env.SECRET, { expiresIn: '7d' })
             return {
                 access_token: acccess_token,
