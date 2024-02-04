@@ -1,4 +1,5 @@
-const Income = require("../models/income.model")
+const Income = require('../models/income.model')
+
 
 
 const insertIncome = async (req,res) =>{
@@ -7,6 +8,7 @@ const insertIncome = async (req,res) =>{
         user:res.locals.user.checkUser._id
     }
     const income = await Income.create(newIncome)
+
     return income
 }
 
@@ -30,8 +32,19 @@ const deleteIncome = async (req) =>{
     
 }
 
-const getIncomes = async(req) =>{
+const getIncomes = async(req,res) =>{
     const query = req.query
+    query.user = res.locals.user.checkUser._id
+    const income = await Income.find(
+        query
+    )
+    return income
+}
+
+const getIncomeById = async(req,res) =>{
+    const query = {
+        _id : req.params.id
+    }
     const income = await Income.find(
         query
     )
@@ -45,5 +58,6 @@ module.exports = {
     insertIncome,
     updateIncome,
     deleteIncome,
+    getIncomeById,
     getIncomes
 }

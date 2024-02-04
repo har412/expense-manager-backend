@@ -1,6 +1,6 @@
 const httpStatus = require("http-status")
 const { handleResponse } = require("../utils/responseHandler")
-const { insertIncome, updateIncome, deleteIncome, getIncomes } = require("../services/income.service")
+const { insertIncome, updateIncome, deleteIncome, getIncomes, getIncomeById } = require("../services/income.service")
 
 
 const addIncome = async(req,res) =>{
@@ -71,7 +71,28 @@ const getAllIncomes = async(req,res)=>{
 
     try {
         const income = await getIncomes(req,res)
+                handleResponse(
+            res,
+            httpStatus.OK,
+            income,
+            'Retrieved'
+        )
+    } catch (error) {
         handleResponse(
+            res,
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error.message,
+            'Error in Getting Income'
+        )
+    }
+
+}
+
+const incomeById = async(req,res)=>{
+
+    try {
+        const income = await getIncomeById(req,res)
+                handleResponse(
             res,
             httpStatus.OK,
             income,
@@ -93,5 +114,6 @@ module.exports = {
     addIncome,
     removeIncome,
     editIncome,
-    getAllIncomes
+    getAllIncomes,
+    incomeById
 }
