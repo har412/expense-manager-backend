@@ -7,13 +7,8 @@ const httpStatus = require('http-status')
 const register = async (req, res,) => {
 
     try {
-        const user = await createUser(req.body, res)
-        handleResponse(
-            res,
-            httpServer.CREATED,
-            user,
-            "User Created Success"
-        )
+         await createUser(req.body, res)
+        
     } catch (error) {
         handleResponse(
             res,

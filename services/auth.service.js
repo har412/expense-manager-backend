@@ -14,7 +14,13 @@ const createUser = async (body, res) => {
         const hashedPassword = await bcrypt.hash(body.password, 10)
         body.password = hashedPassword
         const user = await User.create(body)
-        return user
+        handleResponse(
+            res,
+            httpStatus.CREATED,
+            user,
+            "User Created Success"
+        )
+        
     }
 }
 
