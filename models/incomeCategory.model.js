@@ -5,19 +5,10 @@ const incomeCategorySchema = new mongoose.Schema(
         name:{
             type:String,
             required:true,
-            trim:true,
-            validate:{
-                validator:
-                    async function(value){
-                        const existingCategory = await IncomeCategory.findOne({name:value.trim()})
-                        return !existingCategory
-                    },
-                message: 'Category name must be unique'
-            }
+            trim:true
         },
         description:{
-            type:String,
-            required:true
+            type:String
         },
         user:{
             type:mongoose.Schema.Types.ObjectId,
