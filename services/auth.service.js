@@ -1,8 +1,14 @@
-const httpStatus = require('http-status')
-const User = require('../models/user.model')
-const { handleResponse } = require('../utils/responseHandler')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const httpStatus = require('http-status')
+
+const User = require('../models/user.model')
+const expense_categories = require('../config/expense_categories.json')
+const income_categories = require('../config/income_categories.json')
+const { handleResponse } = require('../utils/responseHandler')
+const { bulkCreateExpenseCategory } = require('./expenseCatergory.service')
+const { bulkCreateIncomeCategory } = require('./incomeCatergory.service')
+
 
 const createUser = async (body, res) => {
 
@@ -14,6 +20,47 @@ const createUser = async (body, res) => {
         const hashedPassword = await bcrypt.hash(body.password, 10)
         body.password = hashedPassword
         const user = await User.create(body)
+        // console.log(user)
+        if (user){
+            try {
+                const data = expense_categories.map((item)=>{
+                    return{
+                        name:item.name,
+                        description:item.description,
+                        user:user._id
+                    }
+                })
+                await bulkCreateExpenseCategory(data)
+            } catch (error) {
+               return    handleResponse(
+                res,
+                httpStatus.BAD_REQUEST,
+                error.message,
+                "Error in adding default expense categories"
+            )
+            }
+        }
+
+        if (user){
+            const data = income_categories.map((item)=>{
+                return{
+                    name:item.name,
+                    description:item.description,
+                    user:user._id
+                }
+            })
+            try {
+                await bulkCreateIncomeCategory(data)
+            } catch (error) {
+               return   handleResponse(
+                res,
+                httpStatus.BAD_REQUEST,
+                error.message,
+                "Error in adding default income categories"
+            )
+            }
+        }
+
         handleResponse(
             res,
             httpStatus.CREATED,

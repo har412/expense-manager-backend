@@ -51,7 +51,9 @@ const getIncomeCategoryById = async(req,res) =>{
     return incomeCategory
 }
 
-
+const bulkCreateIncomeCategory = async(data)=>{
+    return await IncomeCategory.insertMany(data)
+}
 
 
 module.exports = {
@@ -59,5 +61,6 @@ module.exports = {
     updateIncomeCategory,
     deleteIncomeCategory,
     getIncomeCategoryById,
-    getIncomeCategorys
+    getIncomeCategorys,
+    bulkCreateIncomeCategory
 }

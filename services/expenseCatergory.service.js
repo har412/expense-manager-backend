@@ -52,6 +52,9 @@ const getExpenseCategoryById = async(req,res) =>{
 }
 
 
+const bulkCreateExpenseCategory = async(data)=>{
+    return await ExpenseCategory.insertMany(data)
+}
 
 
 module.exports = {
@@ -59,5 +62,6 @@ module.exports = {
     updateExpenseCategory,
     deleteExpenseCategory,
     getExpenseCategoryById,
-    getExpenseCategorys
+    getExpenseCategorys,
+    bulkCreateExpenseCategory
 }
