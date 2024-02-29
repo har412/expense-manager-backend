@@ -1,5 +1,6 @@
 const Expense = require('../models/expense.model')
 
+const ExcelJS = require('exceljs');
 
 
 const insertExpense = async (req,res) =>{
@@ -51,12 +52,42 @@ const getExpenseById = async(req,res) =>{
     return expense
 }
 
+const exportToExcel = async(req,res)=>{
+
+        const expenses = await Expense.find({ user: res.locals.user.checkUser._id });
+
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Expenses');
+
+        worksheet.columns = [
+            { header: 'Date', key: 'date', width: 15 },
+            { header: 'Amount', key: 'amount', width: 15 },
+            { header: 'Category', key: 'category', width: 15 },
+            { header: 'Description', key: 'description', width: 30 }
+        ];
+
+        expenses.forEach(expense => {
+            worksheet.addRow({
+                date: expense.date,
+                amount: expense.amount,
+                category: expense.category,
+                description: expense.description
+            });
+        });
+
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', 'attachment; filename=expenses.xlsx');
+
+        await workbook.xlsx.write(res);
+        res.end();
+}
 
 
 
 module.exports = {
     insertExpense,
     updateExpense,
+    exportToExcel,
     deleteExpense,
     getExpenseById,
     getExpenses

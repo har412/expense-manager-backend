@@ -1,12 +1,12 @@
 const httpStatus = require("http-status")
 const { handleResponse } = require("../utils/responseHandler")
-const { insertExpense, updateExpense, deleteExpense, getExpenses, getExpenseById } = require("../services/expense.service")
+const { insertExpense, updateExpense, deleteExpense, getExpenses, getExpenseById, exportToExcel } = require("../services/expense.service")
 
 
-const addExpense = async(req,res) =>{
+const addExpense = async (req, res) => {
 
     try {
-        const expense = await insertExpense(req,res)
+        const expense = await insertExpense(req, res)
         handleResponse(
             res,
             httpStatus.OK,
@@ -24,10 +24,10 @@ const addExpense = async(req,res) =>{
 
 }
 
-const editExpense = async(req,res) =>{
+const editExpense = async (req, res) => {
 
     try {
-        const expense = await updateExpense(req,res)
+        const expense = await updateExpense(req, res)
         handleResponse(
             res,
             httpStatus.OK,
@@ -45,10 +45,10 @@ const editExpense = async(req,res) =>{
 
 }
 
-const removeExpense = async(req,res) =>{
+const removeExpense = async (req, res) => {
 
     try {
-        const response = await deleteExpense(req,res)
+        const response = await deleteExpense(req, res)
         handleResponse(
             res,
             httpStatus.OK,
@@ -56,22 +56,22 @@ const removeExpense = async(req,res) =>{
             'Deleted Sucess'
         )
     } catch (error) {
-      handleResponse(
-          res,
-          httpStatus.INTERNAL_SERVER_ERROR,
-          error.message,
-          'Error in deleting Expense'
-      )
+        handleResponse(
+            res,
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error.message,
+            'Error in deleting Expense'
+        )
     }
 
 }
 
 
-const getAllExpenses = async(req,res)=>{
+const getAllExpenses = async (req, res) => {
 
     try {
-        const expense = await getExpenses(req,res)
-                handleResponse(
+        const expense = await getExpenses(req, res)
+        handleResponse(
             res,
             httpStatus.OK,
             expense,
@@ -88,11 +88,11 @@ const getAllExpenses = async(req,res)=>{
 
 }
 
-const expenseById = async(req,res)=>{
+const expenseById = async (req, res) => {
 
     try {
-        const expense = await getExpenseById(req,res)
-                handleResponse(
+        const expense = await getExpenseById(req, res)
+        handleResponse(
             res,
             httpStatus.OK,
             expense,
@@ -107,11 +107,27 @@ const expenseById = async(req,res)=>{
         )
     }
 
+}
+
+
+const exportExpensesToExcel = async (req, res) => {
+    try {
+        const expense = await exportToExcel(req, res)
+    } catch (error) {
+        console.log(error)
+       return handleResponse(
+            res,
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error.message,
+            'Error in Exporting to Excel'
+        )
+    }
 }
 
 
 module.exports = {
     addExpense,
+    exportExpensesToExcel,
     removeExpense,
     editExpense,
     getAllExpenses,
